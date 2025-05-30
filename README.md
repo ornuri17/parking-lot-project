@@ -155,3 +155,11 @@ terraform destroy
 - The EC2 instance uses Amazon Linux 2023 (Free tier eligible)
 - The application automatically starts on EC2 instance boot
 - All infrastructure is created in the us-east-1 region by default
+
+## Authors
+
+This project was developed by:
+
+- Dov Farber (314083213)
+- Yonni Levy
+- Or Nuri (203567482)
