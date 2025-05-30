@@ -7,7 +7,7 @@ A cloud-based parking lot management system built with Node.js, TypeScript, and 
 This project was developed by:
 
 - Dov Farber (314083213)
-- Yonni Levy
+- Yonatan Levy - 318339041
 - Or Nuri (203567482)
 
 ## 🚀 **Live Demo**
