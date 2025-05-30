@@ -71,16 +71,16 @@ resource "aws_security_group" "app" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["165.85.58.4/32"]
-    description = "SSH access from VPN"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH access from anywhere"
   }
 
   ingress {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = ["165.85.58.4/32"]
-    description = "Application access from VPN"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Application access from anywhere"
   }
 
   egress {
