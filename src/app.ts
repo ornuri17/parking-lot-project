@@ -32,4 +32,4 @@ app.listen(port, host, () => {
   console.log(`Server running at http://${host}:${port}`);
 });
 
-export { app, server };
+export { app };
