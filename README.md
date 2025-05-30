@@ -2,6 +2,14 @@
 
 A cloud-based parking lot management system built with Node.js, TypeScript, and deployed on AWS using Terraform.
 
+## Authors
+
+This project was developed by:
+
+- Dov Farber (314083213)
+- Yonni Levy
+- Or Nuri (203567482)
+
 🚀 **Live Demo**: The application is running at http://3.211.186.205:3000/
 
 Try it out:
@@ -20,6 +28,65 @@ curl -X POST "http://3.211.186.205:3000/exit?ticketId=TICKET_ID"
 - Parking fee calculation based on duration ($10/hour, prorated in 15-minute increments)
 - RESTful API endpoints for entry and exit operations
 - Automated AWS infrastructure deployment using Terraform
+
+## Cloud Architecture
+
+Our current architecture utilizes AWS Free Tier services in a simple yet effective setup:
+
+```
+                                                        ┌──────────────┐
+                                                        │              │
+                                    ┌──────────────────▶│   Internet   │
+                                    │                   │              │
+                                    │                   └──────────────┘
+                                    │                          ▲
+                                    │                          │
+                                    │                          │
+┌──────────────┐            ┌──────────────┐          ┌──────────────┐
+│              │            │              │          │              │
+│    Client    │──────────▶│ Internet GW  │─────────▶│  Public IP   │
+│              │            │              │          │              │
+└──────────────┘            └──────────────┘          └──────────────┘
+                                    │                          │
+                                    │                          │
+                                    ▼                          ▼
+                            ┌──────────────┐          ┌──────────────┐
+                            │              │          │   EC2 t2.micro│
+                            │  Public VPC  │─────────▶│   Node.js App│
+                            │              │          │   (Port 3000)│
+                            └──────────────┘          └──────────────┘
+                                    │                          │
+                                    │                          │
+                                    ▼                          ▼
+                            ┌──────────────┐          ┌──────────────┐
+                            │  Security    │          │   In-Memory  │
+                            │   Groups     │          │   Storage    │
+                            └──────────────┘          └──────────────┘
+```
+
+### Component Details:
+
+1. **VPC & Networking**:
+
+   - Public VPC with CIDR block 10.0.0.0/16
+   - Public subnet with Internet Gateway
+   - Route table configured for internet access
+
+2. **Compute & Application**:
+
+   - Single t2.micro EC2 instance (Free Tier)
+   - Node.js application running on port 3000
+   - PM2 process manager for application reliability
+
+3. **Security**:
+
+   - Security group controlling inbound traffic
+   - SSH (22) and HTTP (3000) ports open
+   - IAM roles for EC2 instance
+
+4. **Storage**:
+   - In-memory storage for parking records
+   - 8GB gp3 EBS volume for OS and application
 
 ## Prerequisites
 
@@ -156,10 +223,40 @@ terraform destroy
 - The application automatically starts on EC2 instance boot
 - All infrastructure is created in the us-east-1 region by default
 
-## Authors
+## Future Improvements
 
-This project was developed by:
+This project demonstrates basic cloud computing concepts, but could be enhanced with:
 
-- Dov Farber (314083213)
-- Yonni Levy
-- Or Nuri (203567482)
+### Architecture Improvements
+
+- Implement auto-scaling group for EC2 instances
+- Add an Application Load Balancer for better traffic distribution
+- Use Amazon RDS for persistent storage instead of in-memory
+- Implement CloudWatch monitoring and alerts
+- Add CloudFront CDN for static assets
+
+### Security Enhancements
+
+- Implement AWS WAF for web application security
+- Use AWS Secrets Manager for sensitive data
+- Add API Gateway with proper request throttling
+- Implement AWS Shield for DDoS protection
+- Use AWS Certificate Manager for HTTPS
+
+### DevOps Improvements
+
+- Set up CI/CD pipeline using AWS CodePipeline
+- Implement blue-green deployment strategy
+- Add automated testing in the pipeline
+- Set up different environments (dev, staging, prod)
+- Implement infrastructure testing with Terratest
+
+### Cost Optimization
+
+- Implement AWS Cost Explorer monitoring
+- Set up AWS Budgets alerts
+- Use EC2 Spot Instances for cost savings
+- Implement automatic resource cleanup
+- Configure resource tagging strategy
+
+These improvements would make the project more production-ready while demonstrating advanced cloud computing concepts.
