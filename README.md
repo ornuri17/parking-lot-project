@@ -109,19 +109,6 @@ The Terraform configuration creates the following Free Tier eligible resources:
 - 8GB gp3 root volume (Free Tier: 30GB total)
 - Elastic IP (Free when associated with running instance)
 
-## AWS Free Tier Usage
-
-This project is designed to run entirely within AWS Free Tier limits:
-
-- Uses t2.micro instance type (750 hours per month free)
-- Uses only basic monitoring (included in free tier)
-- Keeps EBS volume within free tier limits (30GB)
-- Uses free networking features
-- All IAM features are always free
-- Tagged all resources with "Environment = FreeTier" for tracking
-
-Note: Ensure you don't have other resources using your free tier allocation to avoid charges.
-
 ## Security Considerations
 
 - The application runs on port 3000 and listens on all network interfaces (0.0.0.0)
