@@ -74,24 +74,6 @@ Returns:
 - Parking lot ID
 - Calculated charge
 
-### Testing the API
-
-Since the application listens on all network interfaces, you can test it from any device using the EC2 instance's public IP:
-
-```bash
-# Replace YOUR_EC2_IP with the public IP from terraform output
-export EC2_IP=YOUR_EC2_IP
-
-# Park a vehicle
-curl -X POST "http://$EC2_IP:3000/entry?plate=ABC123&parkingLot=1"
-
-# Exit with the received ticketId
-curl -X POST "http://$EC2_IP:3000/exit?ticketId=TICKET_ID"
-
-# Health check
-curl "http://$EC2_IP:3000/health"
-```
-
 ## AWS Deployment
 
 1. Initialize Terraform:
@@ -153,6 +135,24 @@ Note: Ensure you don't have other resources using your free tier allocation to a
 - Consider using a VPN or bastion host for SSH access
 - Implement proper authentication for the API endpoints
 - Consider using AWS API Gateway and proper network isolation
+
+### Testing the API
+
+Since the application listens on all network interfaces, you can test it from any device using the EC2 instance's public IP:
+
+```bash
+# Replace YOUR_EC2_IP with the public IP from terraform output
+export EC2_IP=YOUR_EC2_IP
+
+# Park a vehicle
+curl -X POST "http://$EC2_IP:3000/entry?plate=ABC123&parkingLot=1"
+
+# Exit with the received ticketId
+curl -X POST "http://$EC2_IP:3000/exit?ticketId=TICKET_ID"
+
+# Health check
+curl "http://$EC2_IP:3000/health"
+```
 
 ## Cleanup
 
